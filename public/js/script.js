@@ -1,6 +1,9 @@
-Vue.http.options.root = $('meta[name="root"]').attr('content');
+root = $('meta[name="root"]').attr('content');
+
+Vue.http.options.root = root;
 Vue.http.headers.common['X-CSRF-TOKEN'] = $('meta[name="csrf-token"]').attr('content');
 
+//Prueba
 if($('#prueba').length) {
     var prueba = new Vue ({
         el: "#prueba",
@@ -21,6 +24,7 @@ if($('#prueba').length) {
     });
 }
 
+//Login
 if($('#login').length) {
 
     var login = new Vue({
@@ -29,9 +33,7 @@ if($('#login').length) {
             usuarioInput: {},
             registroInput: {
                 persona: {},
-                usuario: {
-                    rol: null
-                }
+                usuario: {}
             },
             errors: {},
             datos: {}
@@ -41,19 +43,32 @@ if($('#login').length) {
             abrirRegistroModal: function () {
                 this.registroInput = {
                     persona: {},
-                    usuario: {
-                        rol: null
-                    }
+                    usuario: {}
                 };
+
                 $('#registroModal').modal('show');
             },
 
             login: function () {
-                console.log(this.usuarioInput);
+                this.$http.post(root + '/login/login', this.usuarioInput).then(response => {
+                    window.location.href = root;
+                }, errors => {
+                    this.errors = errors.body;
+                    this.usuarioInput.password = '';
+                })
             },
 
             registrar: function () {
-                console.log(this.registroInput);
+                this.$http.post(root + '/login/registro', this.registroInput).then(response => {
+                    swal('Registro completo!', 'Hemos registrado tu usuario con exito!', 'success').then(value => {
+                        this.usuarioInput.username = this.registroInput.usuario.username;
+                        this.errors = {};
+                        $('#registroModal').modal('hide');
+                    });
+                }, error => {
+                    this.errors = error.body;
+                    this.registroInput.usuario.password = "";
+                });
             }
         },
 

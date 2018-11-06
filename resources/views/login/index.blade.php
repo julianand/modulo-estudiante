@@ -9,12 +9,13 @@
 					<h2>TAPPASK!</h2>
 					<div class="form-group">
 						<label for="username">Usuario</label>
-						<input type="text" class="form-control" v-model="usuarioInput.username">
-						<small class="text-danger"></small>
+						<input type="text" class="form-control" v-model="usuarioInput.username" placeholder="Usuario">
+						<small v-if="errors.username" class="text-danger">@{{errors.username[0]}}</small>
 					</div>
 					<div class="form-group">
 						<label for="password">Contraseña</label>
-						<input type="password" class="form-control" v-model="usuarioInput.password" @keypress.space.prevent>
+						<input type="password" class="form-control" v-model="usuarioInput.password" @keypress.space.prevent placeholder="Contraseña"> 
+						<small v-if="errors.password" class="text-danger">@{{errors.password[0]}}</small>
 					</div>
 					<div class="form-group">
 						<input type="submit" class="btn btn-primary" value="Entrar">
@@ -34,40 +35,45 @@
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					<form @submit.prevent="registro()">
+					<form @submit.prevent="registrar()">
 						<div class="modal-body">
 							<div class="form-row">
 								<div class="form-group col-sm-10">
 									<label for="nombre">Nombre</label>
-									<input class="form-control" type="text" v-model="registroInput.persona.nombre">
+									<input class="form-control" type="text" v-model="registroInput.persona.nombre" placeholder="Nombre">
+									<small v-if="errors['persona.nombre']" class="text-danger">@{{errors['persona.nombre'][0]}}</small>
 								</div>
 								<div class="form-group col-sm-2">
 									<label for="edad">Edad</label>
-									<input class="form-control" type="text" v-model="registroInput.persona.edad">
+									<input class="form-control" type="text" v-model="registroInput.persona.edad" placeholder="Edad">
+									<small v-if="errors['persona.edad']" class="text-danger">@{{errors['persona.edad'][0]}}</small>
 								</div>
 							</div>
 							<div class="form-row">
 								<div class="form-group col-sm-4">
 									<label for="username">Nombre de usuario</label>
-									<input class="form-control" type="text" v-model="registroInput.usuario.username">
+									<input class="form-control" type="text" v-model="registroInput.usuario.username" placeholder="Usuario">
+									<small v-if="errors['usuario.username']" class="text-danger">@{{errors['usuario.username'][0]}}</small>
 								</div>
 								<div class="form-group col-sm-5">
-									<label for="username">Contraseña</label>
-									<input class="form-control" type="password" v-model="registroInput.usuario.password" @keypress.space.prevent>
+									<label for="password">Contraseña</label>
+									<input class="form-control" type="password" v-model="registroInput.usuario.password" @keypress.space.prevent placeholder="Contraseña">
+									<small v-if="errors['usuario.password']" class="text-danger">@{{errors['usuario.password'][0]}}</small>
 								</div>
 								<div class="form-group col-sm-3">
 									<label for="rol">Rol</label>
 									<select class="form-control" v-model="registroInput.usuario.rol">
-										<option :value="null" hidden>Seleccione...</option>
+										<option :value="undefined" hidden>Seleccione...</option>
 										<option v-for="rol in datos.roles" :key="rol.id" v-bind:value="rol">
 											@{{rol.nombre}}
 										</option>
 									</select>
+									<small v-if="errors['usuario.rol']" class="text-danger">@{{errors['usuario.rol'][0]}}</small>
 								</div>
 							</div>
 						</div>
 						<div class="modal-footer">
-							<input class="btn btn-success" value="Registrar">
+							<input class="btn btn-success" type="submit" value="Registrar">
 						</div>
 					</form>
 				</div>

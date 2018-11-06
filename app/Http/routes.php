@@ -14,5 +14,6 @@
 Route::controller('prueba', 'PruebaController');
 Route::controller('login', 'LoginController');
 Route::get('/', function () {
+	if(\Auth::check()) return \Redirect::to(\Auth::user()->rol->root);
     return view('login.index');
 });
