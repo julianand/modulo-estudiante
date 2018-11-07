@@ -1,7 +1,16 @@
 root = $('meta[name="root"]').attr('content');
 
+// var cookies = {};
+// var cookiesString = document.cookie.split(' ');
+// cookiesString.forEach(function (cookie, key) {
+//     aux = cookie.split('=');
+//     if(key != cookiesString.length-1) aux[1] = aux[1].slice(0, aux[1].length-1);
+//     cookies[aux[0]] = aux[1];
+// });
+
 Vue.http.options.root = root;
 Vue.http.headers.common['X-CSRF-TOKEN'] = $('meta[name="csrf-token"]').attr('content');
+// Vue.http.headers.common['X-XSRF-TOKEN'] = cookies['XSRF-TOKEN'];
 
 //Prueba
 if($('#prueba').length) {
@@ -50,7 +59,7 @@ if($('#login').length) {
             },
 
             login: function () {
-                this.$http.post(root + '/login/login', this.usuarioInput).then(response => {
+                this.$http.post('login/login', this.usuarioInput).then(response => {
                     window.location.href = root;
                 }, errors => {
                     this.errors = errors.body;
@@ -59,7 +68,7 @@ if($('#login').length) {
             },
 
             registrar: function () {
-                this.$http.post(root + '/login/registro', this.registroInput).then(response => {
+                this.$http.post('login/registro', this.registroInput).then(response => {
                     swal('Registro completo!', 'Hemos registrado tu usuario con exito!', 'success').then(value => {
                         this.usuarioInput.username = this.registroInput.usuario.username;
                         this.errors = {};
@@ -78,4 +87,10 @@ if($('#login').length) {
             });
         }
     });
+}
+
+if($('#profesor')) {
+    var app = new Vue({
+        el: '#profesor'
+    })
 }
