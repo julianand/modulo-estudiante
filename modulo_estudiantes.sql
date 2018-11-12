@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.5.2
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-11-2018 a las 17:51:12
--- Versión del servidor: 10.1.21-MariaDB
--- Versión de PHP: 5.6.30
+-- Tiempo de generación: 12-11-2018 a las 16:24:52
+-- Versión del servidor: 10.1.35-MariaDB
+-- Versión de PHP: 7.2.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -23,6 +25,21 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `clases`
+--
+
+CREATE TABLE `clases` (
+  `id` int(11) NOT NULL,
+  `profesor_id` int(11) NOT NULL,
+  `nombre` int(11) NOT NULL,
+  `descripcion` varchar(500) NOT NULL,
+  `fecha_inicio` date NOT NULL,
+  `fecha_fin` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `estudiantes`
 --
 
@@ -31,6 +48,13 @@ CREATE TABLE `estudiantes` (
   `codigo` varchar(100) NOT NULL,
   `persona_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `estudiantes`
+--
+
+INSERT INTO `estudiantes` (`id`, `codigo`, `persona_id`) VALUES
+(1, '56633', 2);
 
 -- --------------------------------------------------------
 
@@ -60,7 +84,8 @@ CREATE TABLE `personas` (
 --
 
 INSERT INTO `personas` (`id`, `nombre`, `edad`) VALUES
-(3, 'Julian', '21');
+(1, 'Julian', '21'),
+(2, 'Camilo', '21');
 
 -- --------------------------------------------------------
 
@@ -79,7 +104,7 @@ CREATE TABLE `profesores` (
 --
 
 INSERT INTO `profesores` (`id`, `codigo`, `persona_id`) VALUES
-(3, '810159', 3);
+(1, '11752', 1);
 
 -- --------------------------------------------------------
 
@@ -111,8 +136,9 @@ CREATE TABLE `tareas` (
   `id` int(11) NOT NULL,
   `nombre` varchar(100) NOT NULL,
   `contenido` varchar(500) NOT NULL,
-  `profesor_id` int(11) NOT NULL,
-  `materia_id` int(11) NOT NULL
+  `clase_id` int(11) NOT NULL,
+  `materia_id` int(11) NOT NULL,
+  `fecha_cierre` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -124,8 +150,8 @@ CREATE TABLE `tareas` (
 CREATE TABLE `tareas_estudiantes` (
   `estudiante_id` int(11) NOT NULL,
   `tarea_id` int(11) NOT NULL,
-  `nota` varchar(10) NOT NULL DEFAULT '-',
-  `file_tarea` varchar(100) DEFAULT NULL
+  `file_respuesta` int(11) NOT NULL,
+  `nota` varchar(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -148,11 +174,19 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `username`, `password`, `remember_token`, `persona_id`, `rol_id`) VALUES
-(3, 'julianand', '$2y$10$nU7VWpEJHPAiZtFzlOjeie65cuZKcbAFkfnDv8ZmHKERF3tMTe6C6', 'O29IXRPPqdQiRjOGRFj8lfn1LdBYS3Xn3BGiAf493geqv76sHx2jE99Hc58D', 3, 1);
+(1, 'skr', '$2y$10$GixuCHCLW.jVaKL2SHwZIOP..WKr0tMFAp8XLkGLx9rHCNBF6QelG', 'c4aFkM0BhaRh2APj70wuY4DfPfkvTIC1dRPdshcoBMRt3VYwhnbHR6LuEplP', 1, 1),
+(2, 'kama', '$2y$10$KCJ1ZYHqxWYrhK4OrIgLxecXpH3FSuq/X3tmlztBFJpV48ZKrF0nq', '2eV4o3X9dEQjIWWtLi8dDcS7Jxjsiazr4Z6pK1rxmnn8jOvnsmiIPeGa8TIo', 2, 2);
 
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `clases`
+--
+ALTER TABLE `clases`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `profesor_id` (`profesor_id`);
 
 --
 -- Indices de la tabla `estudiantes`
@@ -191,7 +225,7 @@ ALTER TABLE `roles`
 --
 ALTER TABLE `tareas`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `profesor_id` (`profesor_id`),
+  ADD UNIQUE KEY `profesor_id` (`clase_id`),
   ADD UNIQUE KEY `materia_id` (`materia_id`);
 
 --
@@ -214,43 +248,62 @@ ALTER TABLE `usuarios`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `clases`
+--
+ALTER TABLE `clases`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `estudiantes`
 --
 ALTER TABLE `estudiantes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT de la tabla `materias`
 --
 ALTER TABLE `materias`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT de la tabla `personas`
 --
 ALTER TABLE `personas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT de la tabla `profesores`
 --
 ALTER TABLE `profesores`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT de la tabla `roles`
 --
 ALTER TABLE `roles`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT de la tabla `tareas`
 --
 ALTER TABLE `tareas`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `clases`
+--
+ALTER TABLE `clases`
+  ADD CONSTRAINT `clases_ibfk_1` FOREIGN KEY (`profesor_id`) REFERENCES `profesores` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `estudiantes`
@@ -269,7 +322,7 @@ ALTER TABLE `profesores`
 --
 ALTER TABLE `tareas`
   ADD CONSTRAINT `tareas_ibfk_1` FOREIGN KEY (`materia_id`) REFERENCES `materias` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `tareas_ibfk_2` FOREIGN KEY (`profesor_id`) REFERENCES `profesores` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `tareas_ibfk_2` FOREIGN KEY (`clase_id`) REFERENCES `clases` (`id`);
 
 --
 -- Filtros para la tabla `tareas_estudiantes`
@@ -284,6 +337,7 @@ ALTER TABLE `tareas_estudiantes`
 ALTER TABLE `usuarios`
   ADD CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`persona_id`) REFERENCES `personas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `usuarios_ibfk_2` FOREIGN KEY (`rol_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
