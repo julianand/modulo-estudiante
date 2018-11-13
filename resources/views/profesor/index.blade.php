@@ -21,7 +21,7 @@
 								<div class="card-body">
 									<h5 class="card-title">Nombre de clase</h5>
 									<p class="card-text">Descripcion de la clase.</p>
-									<a href="{{ Request::root() }}/profesor/clase_id" class="btn btn-link">URL de la clase</a>
+									<a href="{{ Request::root() }}/profesor/clases/id" class="btn btn-link">URL de la clase</a>
 								</div>
 							</div>
 						</div>
@@ -42,7 +42,7 @@
 					<h2>Tareas pendientes</h2>
 					<div class="text-muted">No hay tareas pendientes.</div>
 					<div class="list-group list-group-flush">
-						<a href="{{ Request::root() }}/profesor/clase_id/tarea_id" class="list-group-item list-group-item-action text-primary" style="border-top: none;">
+						<a href="{{ Request::root() }}/profesor/tareas/id" class="list-group-item list-group-item-action text-primary" style="border-top: none;">
 							<div>
 								Nombre de la tarea - Nombre de la clase
 							</div>
