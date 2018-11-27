@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('title', 'Modulo de profesor')
-@section('el', 'profesor')
 @section('options')
 	
 	<li class="nav-item">
@@ -29,7 +28,7 @@
 					<br>
 					<div class="row">
 						<div class="col-sm-12">
-							<a href="{{ Request::root() }}/profesor/clases" class="btn btn-primary">
+							<a href="{{ Request::root() }}/profesor/clases/0" class="btn btn-primary">
 								Crear clase !!
 							</a>
 							<a href="{{ Request::root() }}/profesor/clases" class="btn btn-success">

@@ -33,6 +33,6 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
 
     {{-- Own scripts --}}
-    <script type="text/javascript" src="{{ asset('js/script.js') }}"></script>
+    @yield('scripts')
   </body>
 </html>

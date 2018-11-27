@@ -17,7 +17,7 @@ class ProfesorController extends Controller
     	return view('profesor.index');
     }
 
-    public function getClases () {
-    	return view('profesor.clases');
+    public function getClases ($id = null) {
+    	return view('profesor.clases', compact('id'));
     }
 }

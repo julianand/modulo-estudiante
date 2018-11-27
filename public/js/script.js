@@ -79,9 +79,3 @@ if($('#login').length) {
         }
     });
 }
-
-if($('#profesor').length) {
-    var app = new Vue({
-        el: '#profesor'
-    })
-}

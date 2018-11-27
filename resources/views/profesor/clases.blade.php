@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('title', 'Modulo de profesor')
-@section('el', 'clases_profesor')
 @section('styles')
 
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/solid.css" integrity="sha384-rdyFrfAIC05c5ph7BKz3l5NG5yEottvO/DQ0dCrwD8gzeQDjYBHNr1ucUpQuljos" crossorigin="anonymous">
@@ -10,7 +9,7 @@
 @section('options')
 	
 	<li class="nav-item">
-		<a class="nav-link active" href="{{Request::root()}}/profesor/clases">Clases</a>
+		<a class="nav-link active" href="{{ Request::root() }}/profesor/clases">Clases</a>
 	</li>
 
 @endsection
@@ -30,7 +29,7 @@
 					</div>
 					<div class="col-sm-8">
 						<div class="tab-content">
-							<div id="clase1_id" class="tab-pane fade show active">
+							<div id="clase1_id" class="tab-pane fade active show">
 								<h2>Nombre de clase</h2>
 								<small class="text-muted"><strong>Duracion: </strong>Fecha inicio - Fecha fin	</small>
 								<i class="fas fa-check text-success" data-toggle="popover" data-content="Activa" data-trigger="hover"></i>
@@ -44,6 +43,15 @@
 								<h5>Descripcion de la clase</h5>
 								<p>Descripcion</p>
 								<a href="{{ Request::root() }}/profesor/listado/id" class="btn btn-link pl-0">Ver listado de estudiantes</a>
+								<hr>
+								<h5>Tareas de la clase</h5>
+								<ul>
+									<li>
+										<a href="{{ Request::root() }}/tareas/id">Tarea 1</a>
+										<i class="fas fa-check text-success" data-toggle="popover" data-content="Activa - Finaliza: {fecha_fin}" data-trigger="hover"></i>
+										<i class="fas fa-exclamation-circle text-danger" data-toggle="popover" data-content="Finalizada - Finalizo: {fecha_fin}" data-trigger="hover"></i>
+									</li>
+								</ul>
 							</div>
 						</div>
 					</div>
@@ -62,30 +70,40 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<form>
+				<form @submit.prevent="enviar()">
 					<div class="modal-body">
 						<div class="form-row">
 							<div class="col-sm-6 form-group">
 								<label for="nombre">Nombre</label>
-								<input class="form-control" type="text" name="nombre" placeholder="Nombre">
+								<input class="form-control" type="text" v-model="input.nombre" placeholder="Nombre">
 							</div>
 							<div class="col-sm-3 form-group">
 								<label for="fecha_inicio">Fecha de inicio</label>
-								<input class="form-control" type="date" name="fecha_inicio">
+								<input class="form-control" type="date" v-model="input.fecha_inicio">
 							</div>
 							<div class="col-sm-3 form-group">
 								<label for="fecha_fin">Fecha de finalizacion</label>
-								<input class="form-control" type="date" name="fecha_fin">
+								<input class="form-control" type="date" v-model="input.fecha_fin">
 							</div>
+						</div>
+						<hr>
+						<div class="form-group">
+							<label for="descripcion w-100">Descripcion de la clase</label>
+							<textarea v-model="input.descripcion" class="form-control"></textarea>
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary">Save changes</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+						<input type="submit" class="btn btn-success" value="Crear clase">
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
+
+@endsection
+@section('scripts')
+	
+	<script type="text/javascript" src="{{ asset('js/profesor_clases.js') }}"></script>
 
 @endsection

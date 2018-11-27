@@ -1,7 +1,7 @@
 @extends('layouts.principal')
 @section('content')
 	
-	<div id="@yield('el')">
+	<div id="app">
 		<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
 			<a class="navbar-brand" href="#">TAPPASK !!</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menuContent" aria-controls="menuContent" aria-expanded="false" aria-label="Toggle navigation">
